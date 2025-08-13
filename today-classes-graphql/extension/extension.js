@@ -1,6 +1,6 @@
 module.exports = {
     name: 'today-classes-graphql',
-    publisher: '',
+    publisher: 'Trevecca Nazarene Unniversity',
     cards: [{
         type: 'TodayClassesGraphQL',
         source: './src/cards/TodayClasses.jsx',

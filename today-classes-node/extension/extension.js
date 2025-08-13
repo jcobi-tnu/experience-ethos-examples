@@ -1,12 +1,12 @@
 module.exports = {
-    name: 'today-classes-node',
-    publisher: '',
+    name: 'Trevecca Today\'s Classes',
+    publisher: 'Trevecca Nazarene University',
     cards: [{
-        type: 'TodayClassesNode',
+        type: 'TodayClasses',
         source: './src/cards/TodayClasses.jsx',
-        title: 'Today\'s Classes - Node',
-        displayCardType: 'Today Classes Node',
-        description: 'Today Classes - Node',
+        title: 'Today\'s Classes',
+        displayCardType: 'Today Classes',
+        description: 'Today Classes',
         configuration: {
             client: [{
                 key: 'serviceUrl',

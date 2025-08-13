@@ -50,7 +50,7 @@ const useStyles = makeStyles(() => ({
         alignItems: 'center',
         justifyContent: 'center'
     }
-}), { index: 2});
+}), { index: 2 });
 
 const resource = 'today-classes-graphql';
 
@@ -58,10 +58,9 @@ function TodayClasses() {
     const intl = useIntl();
     const classes = useStyles();
 
-    // Experience SDK hooks
     const { setErrorMessage, setLoadingStatus } = useExtensionControl();
+    const { isError, isLoading, isRefreshing, data, error } = useDataQuery(resource);
 
-    const { isError, isLoading, isRefreshing } = useDataQuery(resource);
     const events = useTodayClasses();
     useDashboard(resource);
 
@@ -69,10 +68,12 @@ function TodayClasses() {
 
     useEffect(() => {
         setLoadingStatus(isRefreshing || (isLoading && !events));
-    }, [events, isLoading, isRefreshing])
+        console.log('Loading status updated:', { isRefreshing, isLoading, events });
+    }, [events, isLoading, isRefreshing]);
 
     useEffect(() => {
         if (isError) {
+            console.error('Data query error:', error);
             setErrorMessage({
                 headerMessage: intl.formatMessage({id: 'Classes.contact.administrator'}),
                 textMessage: intl.formatMessage({id: 'Classes.data.error'}),
@@ -80,15 +81,20 @@ function TodayClasses() {
                 iconColor: colorFillAlertError
             });
         }
-    }, [isError, setErrorMessage])
+    }, [isError, error, setErrorMessage]);
+
+    useEffect(() => {
+        console.log('Events received from useTodayClasses:', events);
+    }, [events]);
 
     const lastEventIndex = Array.isArray(events) ? events.length - 1 : 0;
 
     if (Array.isArray(events) && events.length > 0) {
+        console.log('Rendering class list. Number of classes:', events.length);
         return (
             <div className={classes.root}>
                 <List className={classes.list}>
-                    {events.map( (event, index) => (
+                    {events.map((event, index) => (
                         <Fragment key={event.id}>
                             <Event event={event} colorContext={colorContext}/>
                             {index !== lastEventIndex && (
@@ -100,6 +106,7 @@ function TodayClasses() {
             </div>
         );
     } else {
+        console.log('No classes found or events is not an array');
         return (
             <div className={classes.noClasses}>
                 <Illustration name={IMAGES.NEWS} />
@@ -114,18 +121,22 @@ function TodayClasses() {
 function TodayClassesWithProviders() {
     const { getEthosQuery } = useData();
 
-    const options = useMemo(() => ({
-        queryFunction: todayClassesGraphQlQuery,
-        queryKeys: { date: new Date(new Date().toLocaleDateString()).toISOString().slice(0, 10) },
-        queryParameters: { getEthosQuery },
-        resource: resource
-    }));
+    const options = useMemo(() => {
+        const queryKeys = { date: new Date(new Date().toLocaleDateString()).toISOString().slice(0, 10) };
+        console.log('Initializing DataQueryProvider with queryKeys:', queryKeys);
+        return {
+            queryFunction: todayClassesGraphQlQuery,
+            queryKeys,
+            queryParameters: { getEthosQuery },
+            resource: resource
+        };
+    }, [getEthosQuery]);
 
     return (
         <DataQueryProvider options={options}>
-            <TodayClasses/>
+            <TodayClasses />
         </DataQueryProvider>
-    )
+    );
 }
 
 export default withIntl(TodayClassesWithProviders);
