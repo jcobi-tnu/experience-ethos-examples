@@ -1,17 +1,17 @@
 module.exports = {
-    name: 'Today Classes GraphQL',
-    publisher: 'Trevecca Nazarene Unniversity',
+    name: 'Today\'s Classes - Instructor',
+    publisher: 'Trevecca Nazarene University',
     cards: [{
         type: 'TodayClassesGraphQL',
         source: './src/cards/TodayClasses.jsx',
-        title: 'Today\'s Classes',
-        displayCardType: 'Today\'s Classes - GraphQL',
-        description: 'Today\'s Classes via GraphQL',
+        title: 'Today\'s Classes - Instructor',
+        displayCardType: 'Today\'s Classes - Instructor',
+        description: 'Today\'s Classes for Instructor via GraphQL',
         queries: {
             'instructional-events-by-section': [{
                 resourceVersions: {
-                buildings: { min: 6 },
-                instructionalEvents: { min: 8 },
+                buildings: { min: 11 },
+                instructionalEvents: { min: 11 },
                 rooms: { min: 10 },
                 sections: { min: 16 }
                 },
@@ -66,15 +66,16 @@ module.exports = {
                 resourceVersions: {
                 courses: { min: 16 },
                 persons: { min: 12 },
-                sectionRegistrations: { min: 16 },
+                sectionInstructors: { min: 10 },
                 sections: { min: 16 },
-                subjects: { min: 6 }
+                subjects: { min: 6 },
+                instructor: { min: 12 }
                 },
                 'query': `
                     query todaysSections($personId: ID, $yesterday: Date, $tomorrow: Date){
-                        sectionRegistrations : {sectionRegistrations}(
+                        sectionInstructors: {sectionInstructors}(
                             filter: {
-                                {registrant@persons}: {
+                                {instructor}: {
                                     id: {EQ: $personId}
                                 }
                                 {section}: {

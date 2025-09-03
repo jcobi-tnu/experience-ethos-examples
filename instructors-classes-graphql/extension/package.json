@@ -1,7 +1,7 @@
 {
-  "name": "today-classes-graphql",
-  "version": "2.2.4",
-  "description": "Description of today-classes-graphql",
+  "name": "instructor-classes-graphql",
+  "version": "2.2.3",
+  "description": "Description of instructor-classes-graphql",
   "license": "Apache-2.0",
   "private": true,
   "engines": {

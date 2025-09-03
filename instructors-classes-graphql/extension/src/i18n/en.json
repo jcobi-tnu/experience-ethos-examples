@@ -1,0 +1,10 @@
+{
+    "messages": {
+        "Classes.courseAbbrNumberTitle": "{courseAbbreviation} {courseNumber} {courseTitle}",
+        "Classes.time": "Retrieve time: {time}",
+        "Classes.contact.administrator": "Contact Your Administrator",
+        "Classes.data.error": "There was an error retrieving your data",
+        "Classes.no.classes": "You have no classes to teach today",
+        "Classes.not.configured": "The card is not yet configured or configuration is not available except on Step 2 \"Configuration\""
+    }
+}
